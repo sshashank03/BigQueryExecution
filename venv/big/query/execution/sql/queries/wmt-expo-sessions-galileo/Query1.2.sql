@@ -1,0 +1,10 @@
+SELECT
+            exp_id,
+            version,
+            var_id,
+            vtc,
+            bstc,
+            unit_type,
+            partition_day
+FROM
+      galileo_session_base_table;

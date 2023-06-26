@@ -1,0 +1,15 @@
+{
+  "project_id":"wmt-expo-sessions-galileo",
+  "query_details": [
+    {
+      "query_id": "1.1",
+      "dataset_id": "expfw",
+      "table_id": "galileo_session_daily_totals_temp_1"
+    },
+    {
+      "query_id": "1.2",
+      "dataset_id": "expfw_1",
+      "table_id": "galileo_session_daily_totals_temp_2"
+    }
+  ]
+}
