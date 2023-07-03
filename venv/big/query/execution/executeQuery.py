@@ -1,8 +1,8 @@
 import json
 import argparse
-from google.cloud import bigquery
-from google.cloud import storage
-from datetime import datetime, timedelta
+#from google.cloud import bigquery
+#from google.cloud import storage
+#from datetime import datetime, timedelta
 
 
 basePath = "/Users/swapnilshashank/IdeaProjects/BigQueryExecution/venv/big/query/execution/sql/queries"
@@ -23,22 +23,25 @@ def readConfig(project_path):
 def constructQuery(query_id, dataset_id, table_id):
     ddlFilePath = project_path + "/DDL" + query_id + ".sql"
     ddlFile = open(file=ddlFilePath,mode='r').read()
+    print(project_id)
+    print(dataset_id)
+    print(table_id)
     ddlStmt = ddlFile.format(project_id, dataset_id, table_id)
     print(ddlStmt)
     queryFilePath = project_path + "/Query" + query_id + ".sql"
     queryStmt = open(file=queryFilePath,mode='r').read()
     print(queryStmt)
-    executeQueryOnBQ(ddlStmt)
-    executeQueryOnBQ(queryStmt)
+    #executeQueryOnBQ(ddlStmt)
+    #executeQueryOnBQ(queryStmt)
 
 
-def executeQueryOnBQ(query):
-    job_config = bigquery.QueryJobConfig()
-    job_config.use_legacy_sql = False
-    job_config.allow_large_results = True
-    create_table_query_job = client.query(query, job_config=job_config)
-    create_table_query_job.result()
-    print("Query executed successfully!")
+#def executeQueryOnBQ(query):
+#    job_config = bigquery.QueryJobConfig()
+#    job_config.use_legacy_sql = False
+#    job_config.allow_large_results = True
+    #create_table_query_job = client.query(query, job_config=job_config)
+    #create_table_query_job.result()
+    #print("Query executed successfully!")
 
 def main():
     parser = argparse.ArgumentParser()

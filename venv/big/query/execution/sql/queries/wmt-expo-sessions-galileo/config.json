@@ -4,12 +4,27 @@
     {
       "query_id": "1.1",
       "dataset_id": "expfw",
-      "table_id": "galileo_session_daily_totals_temp_1"
+      "table_id": "galileo_step2_active_vtc_totals_web"
     },
     {
       "query_id": "1.2",
-      "dataset_id": "expfw_1",
-      "table_id": "galileo_session_daily_totals_temp_2"
+      "dataset_id": "expfw",
+      "table_id": "galileo_step2_vtc_rollup_web"
+    },
+    {
+      "query_id": "1.4",
+      "dataset_id": "expfw",
+      "table_id": "galileo_step2_valid_vtc_rollup_temp_app"
+    },
+    {
+      "query_id": "1.5",
+      "dataset_id": "expfw",
+      "table_id": "galileo_valid_vtc_rollups"
+    },
+    {
+      "query_id": "1.6",
+      "dataset_id": "expfw",
+      "table_id": "galileo_step2_active_vtc_totals_temp_app"
     }
   ]
 }
