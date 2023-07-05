@@ -1,0 +1,93 @@
+
+
+INSERT OVERWRITE TABLE expfw.galileo_step2_valid_vtc_rollup_temp_app PARTITION (partition_day)
+SELECT
+    exp_id,
+    version,
+    var_id,
+    is_control,
+    vtc,
+    CASE
+        WHEN SUM(orders) > 0 THEN 1
+        ELSE 0
+    END AS converted_vtc_cnt,
+    CASE
+        WHEN SUM(ftb_cnt) > 0 THEN 1
+        ELSE 0
+    END AS ftb_cnt,
+    MAX(qualified) AS qualified,
+    MAX(experience_lvl2) AS  experience_lvl2,
+    CAST(SUM(event_cnt) AS FLOAT64) AS event_cnt,
+    CAST(SUM(homepage_pv_cnt) AS FLOAT64) AS homepage_pv_cnt,
+    CAST(SUM(search_pv_cnt) AS FLOAT64) AS search_pv_cnt,
+    CAST(SUM(browse_pv_cnt) AS FLOAT64) AS browse_pv_cnt,
+    CAST(SUM(item_pv_cnt) AS FLOAT64) AS item_pv_cnt,
+    CAST(SUM(signin_pv_cnt) AS FLOAT64) AS signin_pv_cnt,
+    CAST(SUM(atc_cnt) AS FLOAT64) AS atc_cnt,
+    CAST(SUM(cart_remove_cnt) AS FLOAT64) AS cart_remove_cnt,
+    CAST(SUM(buynow_cnt) AS FLOAT64) AS buynow_cnt,
+    CAST(SUM(cart_pv_cnt) AS FLOAT64) AS cart_pv_cnt,
+    CAST(SUM(pac_pv_cnt) AS FLOAT64) AS pac_pv_cnt,
+    CAST(SUM(stockup_pv_cnt) AS FLOAT64) AS stockup_pv_cnt,
+    CAST(SUM(bookslot_pv_cnt) AS FLOAT64) AS bookslot_pv_cnt,
+    CAST(SUM(bookslot_confirm_cnt) AS FLOAT64) AS bookslot_confirm_cnt,
+    CAST(SUM(chkout_buttontap_cnt) AS FLOAT64) AS chkout_buttontap_cnt,
+    CAST(SUM(checkout_attempt_cnt) AS FLOAT64) AS checkout_attempt_cnt,
+    CAST(SUM(review_order_pv_cnt) AS FLOAT64) AS review_order_pv_cnt,
+    CAST(SUM(myitems_pv_cnt) AS FLOAT64) AS myitems_pv_cnt,
+    CAST(SUM(thankyou_amended_pv_cnt) AS FLOAT64) AS thankyou_amended_pv_cnt,
+    CAST(SUM(orders) AS FLOAT64) AS orders,
+    CAST(SUM(gmv) AS FLOAT64) AS gmv,
+    CAST(SUM(units) AS FLOAT64) AS units,
+    CAST(SUM(ff_method_digital_gmv) AS FLOAT64) AS ff_method_digital_gmv,
+    CAST(SUM(ff_method_digital_units) AS FLOAT64) AS ff_method_digital_units,
+    CAST(SUM(ff_method_shipping_gmv) AS FLOAT64) AS ff_method_shipping_gmv,
+    CAST(SUM(ff_method_shipping_units) AS FLOAT64) AS ff_method_shipping_units,
+    CAST(SUM(ff_method_pickup_gmv) AS FLOAT64) AS ff_method_pickup_gmv,
+    CAST(SUM(ff_method_pickup_units) AS FLOAT64) AS ff_method_pickup_units,
+    CAST(SUM(ff_method_delivery_gmv) AS FLOAT64) AS ff_method_delivery_gmv,
+    CAST(SUM(ff_method_delivery_units) AS FLOAT64) AS ff_method_delivery_units,
+    CAST(SUM(ff_method_other_gmv) AS FLOAT64) AS ff_method_other_gmv,
+    CAST(SUM(ff_method_other_units) AS FLOAT64) AS ff_method_other_units,
+    CAST(SUM(node_type_fc_gmv) AS FLOAT64) AS node_type_fc_gmv,
+    CAST(SUM(node_type_fc_units) AS FLOAT64) AS node_type_fc_units,
+    CAST(SUM(node_type_store_gmv) AS FLOAT64) AS node_type_store_gmv,
+    CAST(SUM(node_type_store_units) AS FLOAT64) AS node_type_store_units,
+    CAST(SUM(node_type_3p_gmv) AS FLOAT64) AS node_type_3p_gmv,
+    CAST(SUM(node_type_3p_units) AS FLOAT64) AS node_type_3p_units,
+    CAST(SUM(node_type_digital_gmv) AS FLOAT64) AS node_type_digital_gmv,
+    CAST(SUM(node_type_digital_units) AS FLOAT64) AS node_type_digital_units,
+    CAST(SUM(node_type_other_gmv) AS FLOAT64) AS node_type_other_gmv,
+    CAST(SUM(node_type_other_units) AS FLOAT64) AS node_type_other_units,
+    CAST(SUM(div_apprl_gmv) AS FLOAT64) AS div_apprl_gmv,
+    CAST(SUM(div_apprl_units) AS FLOAT64) AS div_apprl_units,
+    CAST(SUM(div_cnsmbl_gmv) AS FLOAT64) AS div_cnsmbl_gmv,
+    CAST(SUM(div_cnsmbl_units) AS FLOAT64) AS div_cnsmbl_units,
+    CAST(SUM(div_entmnt_gmv) AS FLOAT64) AS div_entmnt_gmv,
+    CAST(SUM(div_entmnt_units) AS FLOAT64) AS div_entmnt_units,
+    CAST(SUM(div_food_gmv) AS FLOAT64) AS div_food_gmv,
+    CAST(SUM(div_food_units) AS FLOAT64) AS div_food_units,
+    CAST(SUM(div_hardln_gmv) AS FLOAT64) AS div_hardln_gmv,
+    CAST(SUM(div_hardln_units) AS FLOAT64) AS div_hardln_units,
+    CAST(SUM(div_health_gmv) AS FLOAT64) AS div_health_gmv,
+    CAST(SUM(div_health_units) AS FLOAT64) AS div_health_units,
+    CAST(SUM(div_home_gmv) AS FLOAT64) AS div_home_gmv,
+    CAST(SUM(div_home_units) AS FLOAT64) AS div_home_units,
+    CAST(SUM(div_srvc_gmv) AS FLOAT64) AS div_srvc_gmv,
+    CAST(SUM(div_srvc_units) AS FLOAT64) AS div_srvc_units,
+    CAST(SUM(div_other_gmv) AS FLOAT64) AS div_other_gmv,
+    CAST(SUM(div_other_units) AS FLOAT64) AS div_other_units,
+    CAST(SUM(cp) AS FLOAT64) AS cp,
+    snapshot_day AS partition_day
+FROM
+    expfw.galileo_step2_active_vtc_totals_app
+WHERE
+    snapshot_day = '@partition_day'
+GROUP BY
+    exp_id,
+    version,
+    var_id,
+    is_control,
+    vtc,
+    snapshot_day
+;
