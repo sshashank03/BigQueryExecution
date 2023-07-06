@@ -54,8 +54,8 @@ buyer_cap_cnt AS (
         a.version,
         a.var_id,
         a.is_control,
-        CASE WHEN a.is_control = 1 THEN CAST(a.buyer_cnt * 0.005 AS INT) ELSE CAST(a.vtc_cnt * b.buyer_pct * 0.005 AS INT) END AS buyer_995,
-        CASE WHEN a.is_control = 1 THEN CAST(a.buyer_cnt * 0.001 AS INT) ELSE CAST(a.vtc_cnt * b.buyer_pct * 0.001 AS INT) END AS buyer_999
+        CASE WHEN a.is_control = 1 THEN CAST(a.buyer_cnt * 0.005 AS INT64) ELSE CAST(a.vtc_cnt * b.buyer_pct * 0.005 AS INT64) END AS buyer_995,
+        CASE WHEN a.is_control = 1 THEN CAST(a.buyer_cnt * 0.001 AS INT64) ELSE CAST(a.vtc_cnt * b.buyer_pct * 0.001 AS INT64) END AS buyer_999
     FROM buyer_cnt a
     INNER JOIN (
         SELECT
@@ -79,9 +79,9 @@ exp_outlier_vtc_pctl AS (
         a.version,
         a.var_id,
         a.is_control,
-        CASE WHEN a.is_control = 1 THEN 0.995 ELSE (1 - CAST(a.buyer_995 AS DOUBLE)/b.buyer_cnt) END AS buyer_995_pctl,
-        CASE WHEN a.is_control = 1 THEN 0.999 ELSE (1 - CAST(a.buyer_999 AS DOUBLE)/b.buyer_cnt) END AS buyer_999_pctl,
-        CASE WHEN a.is_control = 1 THEN 0.005 ELSE (CAST(a.buyer_995 AS DOUBLE)/b.buyer_cnt) END AS buyer_005_pctl
+        CASE WHEN a.is_control = 1 THEN 0.995 ELSE (1 - CAST(a.buyer_995 AS FLOAT64)/b.buyer_cnt) END AS buyer_995_pctl,
+        CASE WHEN a.is_control = 1 THEN 0.999 ELSE (1 - CAST(a.buyer_999 AS FLOAT64)/b.buyer_cnt) END AS buyer_999_pctl,
+        CASE WHEN a.is_control = 1 THEN 0.005 ELSE (CAST(a.buyer_995 AS FLOAT64)/b.buyer_cnt) END AS buyer_005_pctl
     FROM
         buyer_cap_cnt a
     INNER JOIN
@@ -98,12 +98,12 @@ exp_vtc_cap_val AS (
         a.var_id,
         a.is_control,
         b.buyer_995_pctl AS buyer_995_pctl,
-        PERCENTILE(CAST((gmv*100) AS BIGINT), b.buyer_995_pctl) / 100 AS gmv_capped,
-        PERCENTILE(CAST(units AS BIGINT), b.buyer_995_pctl) AS units_capped,
-        PERCENTILE(CAST(orders AS BIGINT), b.buyer_999_pctl) AS orders_capped,
+        PERCENTILE(CAST((gmv*100) AS INT64), b.buyer_995_pctl) / 100 AS gmv_capped,
+        PERCENTILE(CAST(units AS INT64), b.buyer_995_pctl) AS units_capped,
+        PERCENTILE(CAST(orders AS INT64), b.buyer_999_pctl) AS orders_capped,
         b.buyer_999_pctl as buyer_999_pctl,
-        PERCENTILE(CAST((cp * 100) AS BIGINT), b.buyer_995_pctl) / 100 AS cp_capped,
-        PERCENTILE(CAST((cp * 100) AS BIGINT), b.buyer_005_pctl) / 100 AS cp_negative_capped
+        PERCENTILE(CAST((cp * 100) AS INT64), b.buyer_995_pctl) / 100 AS cp_capped,
+        PERCENTILE(CAST((cp * 100) AS INT64), b.buyer_005_pctl) / 100 AS cp_negative_capped
     FROM
         expfw.galileo_step2_vtc_rollup_web a
     INNER JOIN
@@ -123,6 +123,6 @@ exp_vtc_cap_val AS (
         b.buyer_999_pctl
 )
 
-CREATE TEMPORARY TABLE galileo_step2_exp_vtc_cap_val_web AS
+CREATE TABLE galileo_step2_exp_vtc_cap_val_web AS
 SELECT *
 FROM exp_vtc_cap_val;

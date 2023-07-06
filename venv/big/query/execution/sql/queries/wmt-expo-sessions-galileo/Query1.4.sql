@@ -1,5 +1,3 @@
-
-
 INSERT OVERWRITE TABLE expfw.galileo_step2_valid_vtc_rollup_temp_app PARTITION (partition_day)
 SELECT
     exp_id,

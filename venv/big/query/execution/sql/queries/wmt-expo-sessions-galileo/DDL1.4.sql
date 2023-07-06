@@ -68,15 +68,11 @@ CREATE EXTERNAL TABLE IF NOT EXISTS `{}.{}.{}` (
     div_srvc_units FLOAT64,
     div_other_gmv FLOAT64,
     div_other_units FLOAT64,
-    cp FLOAT64)
-PARTITIONED BY (
+    cp FLOAT64,
     partition_day string)
-ROW FORMAT SERDE
-    'org.apache.hadoop.hive.ql.io.orc.OrcSerde'
-STORED AS INPUTFORMAT
-    'org.apache.hadoop.hive.ql.io.orc.OrcInputFormat'
-OUTPUTFORMAT
-    'org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat'
-LOCATION
-    'gs://galileo-core--galileo_step2_valid_vtc_rollup_temp_app/'
-;
+PARTITIONED BY
+    partition_day
+OPTIONS(
+  expiration_timestamp=TIMESTAMP "2028-01-01 00:00:00 UTC",
+  description=""
+);

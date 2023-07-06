@@ -1,5 +1,5 @@
 {
-  "project_id":"wmt-expo-sessions-galileo",
+  "project_id": "wmt-expo-sessions-galileo",
   "query_details": [
     {
       "query_id": "1.1",
@@ -10,6 +10,11 @@
       "query_id": "1.2",
       "dataset_id": "expfw",
       "table_id": "galileo_step2_vtc_rollup_web"
+    },
+    {
+      "query_id": "1.3",
+      "dataset_id": "expfw",
+      "table_id": "galileo_step2_valid_vtc_rollup_temp_app"
     },
     {
       "query_id": "1.4",

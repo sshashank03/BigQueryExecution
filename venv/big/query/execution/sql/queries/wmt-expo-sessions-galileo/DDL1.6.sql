@@ -1,4 +1,4 @@
-CREATE EXTERNAL TABLE IF NOT EXISTS `{}.{}.{}` (
+CREATE TABLE IF NOT EXISTS `{}.{}.{}` (
     partition_day string,
     exp_id string,
     version INT64,
@@ -71,16 +71,9 @@ CREATE EXTERNAL TABLE IF NOT EXISTS `{}.{}.{}` (
     div_srvc_units FLOAT64,
     div_other_gmv FLOAT64,
     div_other_units FLOAT64,
-    cp FLOAT64)
-PARTITIONED BY (
+    cp FLOAT64,
     snapshot_day string)
-ROW FORMAT SERDE
-    'org.apache.hadoop.hive.ql.io.orc.OrcSerde'
-STORED AS INPUTFORMAT
-    'org.apache.hadoop.hive.ql.io.orc.OrcInputFormat'
-OUTPUTFORMAT
-    'org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat'
-LOCATION
-    'gs://galileo-core--galileo_step2_active_vtc_totals_temp_app/'
+PARTITIONED BY
+    snapshot_day
 ;
 

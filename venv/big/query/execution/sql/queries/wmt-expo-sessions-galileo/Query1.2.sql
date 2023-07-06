@@ -8,10 +8,10 @@ SELECT
     is_control,
     vtc,
     MAX(qualified) AS qualified,
-    CAST(SUM(gmv) AS FLOAT64) AS gmv,
-    CAST(SUM(units) AS FLOAT64) AS units,
-    CAST(SUM(orders) AS FLOAT64) AS orders,
-    CAST(SUM(cp) AS FLOAT64) AS cp,
+    SUM(gmv) AS gmv,
+    SUM(units) AS units,
+    SUM(orders) AS orders,
+    SUM(cp) AS cp,
     snapshot_day AS partition_day
 FROM
     expfw.galileo_step2_active_vtc_totals_web
